@@ -4,9 +4,15 @@ nav{
     background-color: #e57373 !important;
     color: white !important;
 }
+
 h5{
     color: #e57373 !important;
 }
+
+h1{
+    color: #e57373 !important;
+}
+
 a:hover{
     color: #4a148c !important;
 }

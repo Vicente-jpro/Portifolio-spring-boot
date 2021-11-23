@@ -18,10 +18,10 @@
 			  <div class="collapse navbar-collapse" id="navbarScroll">
 				<ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
 				  <li class="nav-item">
-					<a class="nav-link active text-white" aria-current="page" href="#">Home</a>
+					<a class="nav-link active text-white" aria-current="page" th:href="@{/}">Home</a>
 				  </li>
 				  <li class="nav-item">
-					<a class="nav-link text-white" th:href="@{/save-student}">New Student</a>
+					<a class="nav-link text-white" th:href="@{/new-student}">New Student</a>
 				  </li>
 				  <li class="nav-item">
 					<a class="nav-link text-white" th:href="@{/view-students}">View Students</a>
@@ -31,34 +31,25 @@
 			</div>
 		  </nav>		
 	</header>
-	<main class="container col-sm-3 my-5">
+	<main class="container col-sm-5 my-5">
 		<h5>List of Student</h5>			
 		<table class="table">
   <thead>
     <tr>
-      <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Handle</th>
+      <th scope="col">ID</th>
+      <th scope="col">Name</th>
+      <th scope="col">email</th>
+      <th scope="col">Operations</th>
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td colspan="2">Larry the Bird</td>
-      <td>@twitter</td>
+    <tr th:each="student: ${listStudent} ">
+      <td th:text="${student.id}"></td>
+      <td th:text="${student.name}"></td>
+      <td th:text="${student.email}"></td>
+      <td><a th:href="@{/update-student/{id}(id=${student.id})}"><button class="btn btn-success">Update</button></a></td>
+      <td><a th:href="@{/delete-student/{id}(id=${student.id})}"><button class="btn btn-danger">Delete</button></a></td>
+      <td></td>
     </tr>
   </tbody>
 </table>

@@ -41,7 +41,8 @@ public class StudentController {
 	public String update(@PathVariable Long id, Model model) throws StudentNotFoundException, StudentDeleteException {
 		
 		Student student = this.studentServicedb.getStudent( new Student( id) );
-		model.addAllAttributes("updateStudent", student );
+		model.addAllAttribute("updateStudent", student );
+
 		return "redirect:/view-students";
 	}
 	
