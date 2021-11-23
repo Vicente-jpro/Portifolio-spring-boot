@@ -1,0 +1,27 @@
+nav{
+    background-color: #e57373 !important;
+    color: white !important;
+}
+h5{
+    color: #e57373 !important;
+}
+a:hover{
+    color: #4a148c !important;
+}
+
+body{
+    background-color: #ffebee !important;
+}
+
+.border-no{
+    border-top-style: hidden;
+    border-right-style: hidden;
+    border-left-style: hidden;
+    border-bottom-style: groove;
+    background-color: #ffcdd2;
+}
+
+::placeholder {
+    color: #e57373;
+    opacity: 1; /* Firefox */
+  }
