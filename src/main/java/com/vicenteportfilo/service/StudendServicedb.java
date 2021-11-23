@@ -18,7 +18,7 @@ public class StudendServicedb implements StudentService{
 
 	@Override
 	public void save(Student student) {
-		// TODO Auto-generated method stub
+		this.studentRepository.save(student);
 		
 	}
 
