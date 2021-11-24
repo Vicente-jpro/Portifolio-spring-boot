@@ -1,8 +1,11 @@
 package com.vicenteportfilo.controllers;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,7 +35,7 @@ public class StudentController {
 	}
 	
 	@PostMapping("/save-student")
-	public String save(@ModelAttribute("saveStudent") Student student) {
+	public String save(@Valid @ModelAttribute("saveStudent") Student student) {
 		this.studentServicedb.save(student);
 		return "redirect:/view-students";
 	}
@@ -49,9 +52,12 @@ public class StudentController {
 	}
 	
 	@PostMapping("/update-student")
-	public String update(@ModelAttribute("updateStudent") Student student) throws StudentNotFoundException, StudentDeleteException {
+	public String update(
+			@Valid @ModelAttribute("updateStudent") Student student,
+			BindingResult resBindingResult
+			) throws StudentNotFoundException, StudentDeleteException {
 		
-		this.studentServicedb.save( student );
+		resBindingResult.hasErrors() this.studentServicedb.save( student );
 
 		return "redirect:/new-student";
 	}
