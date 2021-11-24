@@ -1,10 +1,10 @@
 function validationSave() {
 	let name = $('#name').val();
 	let email = $('#email').val();
-	if (name === '') {
+	if (name === '' || name.lenght() < 0) {
 		alert('Name can not be null');
 		return false;
-	} else if (email === '') {
+	} else if (email === '' || email.lenght() < 0) {
 		alert('Email can not be null')
 		return false;
 	}
