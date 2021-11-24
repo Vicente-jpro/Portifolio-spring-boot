@@ -6,7 +6,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import net.bytebuddy.dynamic.loading.ClassReloadingStrategy.Strategy;
 
 @Entity
 @Table(name = "students")
@@ -49,7 +48,5 @@ public class Student {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
-	
 
 }
