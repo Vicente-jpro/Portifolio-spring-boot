@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.vicenteportfilo.domains.Student;
+import com.vicenteportfilo.enums.StudentMessageExeptionEnum;
 import com.vicenteportfilo.exceptions.StudentDeleteException;
 import com.vicenteportfilo.exceptions.StudentNotFoundException;
 import com.vicenteportfilo.repository.StudentRepository;
@@ -24,13 +25,12 @@ public class StudendServicedb implements StudentService{
 
 	@Override
 	public List<Student> read() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.studentRepository.findAll();
 	}
 
 	@Override
 	public void delete(Student student) throws StudentNotFoundException, StudentDeleteException {
-		// TODO Auto-generated method stub
+		this.studentRepository.delete(student);
 		
 	}
 
@@ -42,8 +42,9 @@ public class StudendServicedb implements StudentService{
 
 	@Override
 	public Student getStudent(Student student) throws StudentNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return this.studentRepository.findById(student.getId())
+									 .orElseThrow( ()-> new StudentNotFoundException( StudentMessageExeptionEnum.ESTUDENT_NOT_FOUND_GET.message) );
 	}
 	
 	

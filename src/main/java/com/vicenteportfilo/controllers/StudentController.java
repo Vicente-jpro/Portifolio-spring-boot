@@ -5,9 +5,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.vicenteportfilo.domains.Student;
+import com.vicenteportfilo.exceptions.StudentDeleteException;
+import com.vicenteportfilo.exceptions.StudentNotFoundException;
 import com.vicenteportfilo.service.StudendServicedb;
 import com.vicenteportfilo.service.StudentService;
 
@@ -19,6 +22,12 @@ public class StudentController {
 	
 	@GetMapping("/")
 	public String index(Model model) {
+		return "index";
+	}
+	
+	
+	@GetMapping("/new-student")
+	public String formToSave(Model model) {
 		model.addAttribute("saveStudent", new Student());
 		return "student_save";
 	}
@@ -47,6 +56,7 @@ public class StudentController {
 
 	@GetMapping("/view-students")
 	public String view(Model model) {
+		model.addAttribute("listStudent", this.studentServicedb.read());
 		return "student_view";
 	}
 }
