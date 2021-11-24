@@ -36,6 +36,7 @@
 		<form action="#" th:action="@{/update-student}" th:object="${updateStudent}" method="post">
 			<div class="d-grid gap-2">
 				<input type="hidden" placeholder="Your name" th:field="*{id}" >
+				<div class="alert alert-danger" role="alert" th:each="message: ${listMessages}" th:text="${message}"></div>	
 				<input type="text" placeholder="Your name" class="my-1 border-no" th:field="*{name}">
 				<input type="email" placeholder="Your email@domain.com"  class="border-no" th:field="*{email}" >	
 				<button type="submit" class="btn btn-primary">Save</button>
