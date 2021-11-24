@@ -1,8 +1,14 @@
 package com.vicenteportfilo.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,7 +18,8 @@ import com.vicenteportfilo.domains.Student;
 import com.vicenteportfilo.exceptions.StudentDeleteException;
 import com.vicenteportfilo.exceptions.StudentNotFoundException;
 import com.vicenteportfilo.service.StudendServicedb;
-import com.vicenteportfilo.service.StudentService;
+
+
 
 @Controller
 public class StudentController {
@@ -32,16 +39,29 @@ public class StudentController {
 	}
 	
 	@PostMapping("/save-student")
-	public String save(@ModelAttribute("saveStudent") Student student) {
-		this.studentServicedb.save(student);
+	public String save(@Valid Student saveStudent, BindingResult bindingResult, Model model) {
+		
+		if ( !bindingResult.hasErrors() ) 
+			this.studentServicedb.save(saveStudent);
+		else {
+			
+			List<String> listMessages = new ArrayList<>();
+			bindingResult.getAllErrors()
+						 .forEach( error -> {
+						  listMessages.add( error.getDefaultMessage() );
+			});
+			
+			model.addAttribute( "saveStudent", saveStudent );
+			model.addAttribute("listMessages", listMessages);
+			
+			return "student_save";
+		}
 		return "redirect:/view-students";
 	}
 
 	@GetMapping("/update-student/{id}")
-	public String formToUpdate(
-			@PathVariable Long id, 
-			Model model,
-			@ModelAttribute("updateStudent") Student student) throws StudentNotFoundException, StudentDeleteException {
+	public String formToUpdate(@PathVariable Long id, Model model, @ModelAttribute("updateStudent") Student student) 
+			throws StudentNotFoundException, StudentDeleteException {
 	
 		model.addAttribute("updateStudent", this.studentServicedb.getStudent( new Student( id) ) );
 
@@ -49,9 +69,27 @@ public class StudentController {
 	}
 	
 	@PostMapping("/update-student")
-	public String update(@ModelAttribute("updateStudent") Student student) throws StudentNotFoundException, StudentDeleteException {
+	public String update(
+			@Valid @ModelAttribute("updateStudent") Student student,
+			BindingResult bindingResult, 
+			Model model
+			) throws StudentNotFoundException, StudentDeleteException {
 		
-		this.studentServicedb.save( student );
+		
+		// if there are no erros
+		if ( !bindingResult.hasErrors() ) {
+			this.studentServicedb.save( student );
+		}else {
+			
+			List<String> listMessages = new ArrayList<>();
+			bindingResult.getAllErrors().forEach(error -> {
+				listMessages.add(error.getDefaultMessage());
+			});
+			
+			model.addAttribute("updateStudent", student);
+			model.addAttribute("listMessages", listMessages);
+			return "student_update";
+		}
 
 		return "redirect:/new-student";
 	}
