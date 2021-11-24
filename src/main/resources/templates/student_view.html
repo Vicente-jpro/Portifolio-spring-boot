@@ -31,25 +31,25 @@
 			</div>
 		  </nav>		
 	</header>
-	<main class="container col-sm-5 my-5">
+	<main class="container col-sm-6 my-5">
 		<h5>List of Student</h5>			
 		<table class="table">
   <thead>
     <tr>
-      <th scope="col">ID</th>
+      <th scope="col">Id</th>
       <th scope="col">Name</th>
-      <th scope="col">email</th>
+      <th scope="col">Email</th>
+
       <th scope="col">Operations</th>
     </tr>
   </thead>
   <tbody>
-    <tr th:each="student: ${listStudent} ">
+    <tr th:each="student: ${listStudent}">
       <td th:text="${student.id}"></td>
       <td th:text="${student.name}"></td>
       <td th:text="${student.email}"></td>
-      <td><a th:href="@{/update-student/{id}(id=${student.id})}"><button class="btn btn-success">Update</button></a></td>
+      <td><a th:href="@{/update-student/{id}(id=${student.id})}"><button class="btn btn-success">Updade</button></a></td>
       <td><a th:href="@{/delete-student/{id}(id=${student.id})}"><button class="btn btn-danger">Delete</button></a></td>
-      <td></td>
     </tr>
   </tbody>
 </table>
