@@ -41,15 +41,16 @@ public class StudentController {
 	@PostMapping("/save-student")
 	public String save(@Valid Student saveStudent, BindingResult bindingResult, Model model) {
 		
-		List<String> listMessages = new ArrayList<>();
-		bindingResult.getAllErrors()
-					 .forEach( error -> {
-					  listMessages.add( error.getDefaultMessage() );
-		});
-		
 		if ( !bindingResult.hasErrors() ) 
 			this.studentServicedb.save(saveStudent);
 		else {
+			
+			List<String> listMessages = new ArrayList<>();
+			bindingResult.getAllErrors()
+						 .forEach( error -> {
+						  listMessages.add( error.getDefaultMessage() );
+			});
+			
 			model.addAttribute( "saveStudent", saveStudent );
 			model.addAttribute("listMessages", listMessages);
 			
@@ -59,10 +60,8 @@ public class StudentController {
 	}
 
 	@GetMapping("/update-student/{id}")
-	public String formToUpdate(
-			@PathVariable Long id, 
-			Model model,
-			@ModelAttribute("updateStudent") Student student) throws StudentNotFoundException, StudentDeleteException {
+	public String formToUpdate(@PathVariable Long id, Model model, @ModelAttribute("updateStudent") Student student) 
+			throws StudentNotFoundException, StudentDeleteException {
 	
 		model.addAttribute("updateStudent", this.studentServicedb.getStudent( new Student( id) ) );
 
@@ -76,11 +75,19 @@ public class StudentController {
 			Model model
 			) throws StudentNotFoundException, StudentDeleteException {
 		
+		
 		// if there are no erros
 		if ( !bindingResult.hasErrors() ) {
 			this.studentServicedb.save( student );
 		}else {
+			
+			List<String> listMessages = new ArrayList<>();
+			bindingResult.getAllErrors().forEach(error -> {
+				listMessages.add(error.getDefaultMessage());
+			});
+			
 			model.addAttribute("updateStudent", student);
+			model.addAttribute("listMessages", listMessages);
 			return "student_update";
 		}
 
