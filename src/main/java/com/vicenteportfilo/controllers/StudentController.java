@@ -25,7 +25,6 @@ public class StudentController {
 		return "index";
 	}
 	
-	
 	@GetMapping("/new-student")
 	public String formToSave(Model model) {
 		model.addAttribute("saveStudent", new Student());
@@ -69,4 +68,6 @@ public class StudentController {
 		model.addAttribute("listStudent", this.studentServicedb.read());
 		return "student_view";
 	}
+	
+
 }

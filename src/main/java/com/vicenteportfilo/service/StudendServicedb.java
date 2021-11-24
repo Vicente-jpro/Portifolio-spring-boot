@@ -1,6 +1,7 @@
 package com.vicenteportfilo.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,8 +31,8 @@ public class StudendServicedb implements StudentService{
 
 	@Override
 	public void delete(Student student) throws StudentNotFoundException, StudentDeleteException {
-		this.studentRepository.delete(student);
-		
+		this.studentRepository.deleteById(student.getId());
+	
 	}
 
 	@Override
@@ -42,9 +43,12 @@ public class StudendServicedb implements StudentService{
 
 	@Override
 	public Student getStudent(Student student) throws StudentNotFoundException {
+
+		return student = this.studentRepository.findById(student.getId())
+										.orElseThrow( 
+												()-> new StudentNotFoundException(StudentMessageExeptionEnum.ESTUDENT_NOT_FOUND_GET.message) ); 
 		
-		return this.studentRepository.findById(student.getId())
-									 .orElseThrow( ()-> new StudentNotFoundException( StudentMessageExeptionEnum.ESTUDENT_NOT_FOUND_GET.message) );
+
 	}
 	
 	
