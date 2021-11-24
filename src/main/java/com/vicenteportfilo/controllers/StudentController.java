@@ -37,14 +37,24 @@ public class StudentController {
 		this.studentServicedb.save(student);
 		return "redirect:/view-students";
 	}
-	
-	@GetMapping("/update-student/{id}")
-	public String update(@PathVariable Long id, Model model) throws StudentNotFoundException, StudentDeleteException {
-		
-		Student student = this.studentServicedb.getStudent( new Student( id) );
-		model.addAttribute("updateStudent", student );
 
-		return "redirect:/view-students";
+	@GetMapping("/update-student/{id}")
+	public String formToUpdate(
+			@PathVariable Long id, 
+			Model model,
+			@ModelAttribute("updateStudent") Student student) throws StudentNotFoundException, StudentDeleteException {
+	
+		model.addAttribute("updateStudent", this.studentServicedb.getStudent( new Student( id) ) );
+
+		return "student_update";
+	}
+	
+	@PostMapping("/update-student")
+	public String update(@ModelAttribute("updateStudent") Student student) throws StudentNotFoundException, StudentDeleteException {
+		
+		this.studentServicedb.save( student );
+
+		return "redirect:/new-student";
 	}
 	
 	@GetMapping("/delete-student/{id}")
