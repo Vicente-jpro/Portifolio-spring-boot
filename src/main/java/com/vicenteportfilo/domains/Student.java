@@ -20,15 +20,8 @@ public class Student {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	@NotNull( message = "Name field can't be null")
-	@NotEmpty( message = "Name field can't be empty")
-	@Size(max = 40, message = "Your name can only have 40 caracters")
-	private String name;
 
-	@NotNull( message = "Email must be like username@domain.com but expeted null")
-	@NotEmpty( message = "Email field can't be empty")
-	@Size(max = 40, message = "Your email can only have 40 caracters")
+	private String name;
 	private String email;
 	
 	public Student() {
