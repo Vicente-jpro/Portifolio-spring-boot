@@ -35,14 +35,12 @@
 		  </nav>		
 	</header>
 	<main class="container col-sm-3 my-5">
-		<h5>Save a new Student</h5>			
-		<form action="#" th:action="@{/save-student}" th:object="${saveStudent}" method="post" onsubmit="return validationSave() ? true : false">
+		<h5>Save a new Student</h5>		
+		<form action="#" th:action="@{/save-student}" th:object="${saveStudent}" method="post" id="saveForm">
 			<div class="d-grid gap-2">
-				<input type="hidden" placeholder="Your name" th:field="*{id}" >
-				<div class="alert alert-danger" role="alert" th:each="message: ${listMessages}" th:text="${message}"></div>	
-				<input type="text" placeholder="Your name" class="my-1 border-no" th:field="*{name}" id="name" >
-				<input type="email" placeholder="Your email@domain.com"  class="border-no" th:field="*{email}" id="email">
-					
+				<input type="hidden" th:field="*{id}" placeholder="Your name"  >	
+				<input type="text" th:field="*{name}" placeholder="Your name" class="my-1 border-no"  id="name" minlength="4" required>
+				<input type="email" placeholder="Your email@domain.com"  class="border-no" th:field="*{email}" id="email" required>
 				<button type="submit" class="btn btn-primary">Save</button>
 			</div>
 		</form>
